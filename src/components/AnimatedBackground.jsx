@@ -2,6 +2,9 @@ import { motion, useReducedMotion } from "framer-motion";
 
 export default function AnimatedBackground() {
   const reduceMotion = useReducedMotion();
+  const isMobile =
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+  const paused = reduceMotion || isMobile;
 
   return (
     <div
@@ -16,7 +19,7 @@ export default function AnimatedBackground() {
 
       {/* Awan bergerak sangat pelan di atas langit (hanya transform, amplitude kecil). */}
       <motion.div
-        animate={reduceMotion ? undefined : { x: ["-1.5%", "1.5%", "-1.5%"] }}
+        animate={paused ? undefined : { x: ["-1.5%", "1.5%", "-1.5%"] }}
         transition={{ duration: 45, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-[30%] left-[-8%] h-[38%] w-[116%] bg-contain bg-center bg-no-repeat opacity-40 mix-blend-multiply [will-change:transform]"
         style={{ backgroundImage: "url('/images/clouds.jpg')" }}

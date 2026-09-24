@@ -18,6 +18,10 @@ const INK_STYLE = {
 export default function HeroNotebook() {
   // Hormati prefers-reduced-motion: animasi otomatis dimatikan.
   const reduce = useReducedMotion();
+  // Layar kecil (HP): matikan animasi melayang/orbit agar tidak nge-frame.
+  const isMobile =
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+  const paused = reduce || isMobile;
 
   return (
     <div
@@ -26,7 +30,7 @@ export default function HeroNotebook() {
     >
       {/* Notebook melayang */}
       <motion.div
-        animate={reduce ? undefined : { y: [0, -10, 0] }}
+        animate={paused ? undefined : { y: [0, -10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         className="relative flex justify-center"
       >
@@ -84,7 +88,7 @@ export default function HeroNotebook() {
           alt=""
           draggable="false"
           animate={
-            reduce
+            paused
               ? undefined
               : {
                   x: [0, 20, 0, -20, 0],
