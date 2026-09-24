@@ -8,18 +8,16 @@ export default function AnimatedBackground() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#071321]"
     >
-      {/* Layer 1: langit. Zoom pelan agar suasana tidak statis. */}
-      <motion.div
-        animate={reduceMotion ? undefined : { scale: [1, 1.05, 1] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -inset-8 bg-cover bg-center [will-change:transform]"
+      {/* Layer 1: langit. Statis agar tidak membebani GPU / repaint backdrop-blur. */}
+      <div
+        className="absolute -inset-8 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/sky.jpg')" }}
       />
 
-      {/* Awan bergerak pelan di atas langit. */}
+      {/* Awan bergerak sangat pelan di atas langit (hanya transform, amplitude kecil). */}
       <motion.div
-        animate={reduceMotion ? undefined : { x: ["-3%", "3%", "-3%"], y: [0, -10, 0] }}
-        transition={{ duration: 38, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduceMotion ? undefined : { x: ["-1.5%", "1.5%", "-1.5%"] }}
+        transition={{ duration: 45, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-[30%] left-[-8%] h-[38%] w-[116%] bg-contain bg-center bg-no-repeat opacity-40 mix-blend-multiply [will-change:transform]"
         style={{ backgroundImage: "url('/images/clouds.jpg')" }}
       />
