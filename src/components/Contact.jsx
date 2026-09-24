@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
+const YOUR_EMAIL = "mm1076157@gmail.com";
 const initialForm = { name: "", email: "", subject: "", message: "" };
 
 export default function Contact() {
@@ -27,15 +28,27 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setStatus("loading");
+    const body = [
+      "Pesan dari form kontak portofolio",
+      "",
+      "=========================================",
+      "Dari:",
+      `  Nama  : ${form.name}`,
+      `  Email : ${form.email}`,
+      `  Balas ke: ${form.email}`,
+      "=========================================",
+      "",
+      "Pesan:",
+      form.message,
+    ].join("\n");
 
-    // TODO: Ganti dengan integrasi EmailJS / Formspree, contoh:
-    // await emailjs.send("SERVICE_ID", "TEMPLATE_ID", form, "PUBLIC_KEY");
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${YOUR_EMAIL}&su=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(body)}`;
+
+    window.open(gmailCompose, "_blank");
 
     setStatus("success");
     setForm(initialForm);
