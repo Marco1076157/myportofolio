@@ -39,7 +39,7 @@ export default function ProjectModal({ project, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+        className="fixed inset-0 z-[100] bg-black/70 md:backdrop-blur-sm flex items-center justify-center p-4"
       >
         <motion.div
           key="modal"
@@ -64,6 +64,10 @@ export default function ProjectModal({ project, onClose }) {
             <img
               src={project.screenshots[activeImage]}
               alt={`${project.title} screenshot ${activeImage + 1}`}
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
               onClick={() => setIsLightboxOpen(true)}
               className="w-full h-full object-cover cursor-zoom-in"
             />
@@ -162,6 +166,10 @@ export default function ProjectModal({ project, onClose }) {
               <img
                 src={project.screenshots[activeImage]}
                 alt={`${project.title} full view`}
+                width={1280}
+                height={720}
+                loading="lazy"
+                decoding="async"
                 className="max-w-full max-h-full rounded-lg object-contain"
               />
               <button

@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
+import { usePerfMode } from "../hooks/usePerfMode.js";
 
 const HERO_TEXT = "Halo, saya Bonivasius Marco";
 const HERO_PREFIX = "Halo, saya ";
@@ -38,7 +39,14 @@ function useTypewriter(text, speed) {
 
 export default function Hero() {
   const reduce = useReducedMotion();
-  const typed = useTypewriter(HERO_TEXT, TYPE_SPEED);
+  const perf = usePerfMode();
+  const typed = useTypewriter(HERO_TEXT, perf.isMobile ? 50 : TYPE_SPEED);
+
+  // Entrance jadi lebih singkat & tanpa jeda panjang di mobile
+  const enter = (delay) => ({
+    duration: perf.duration(0.6),
+    delay: perf.isMobile || perf.isReduced ? Math.min(delay * 0.4, 0.2) : delay,
+  });
 
   const scrollToProjects = () => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
@@ -54,7 +62,8 @@ export default function Hero() {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          transition={enter(0.15)}
+          style={{ willChange: "transform, opacity" }}
           className="max-w-4xl text-5xl sm:text-7xl font-bold leading-[0.9] tracking-tight text-sky-50"
         >
           {typed.slice(0, HERO_PREFIX.length)}
@@ -72,7 +81,8 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={enter(0.3)}
+          style={{ willChange: "transform, opacity" }}
           className="text-base sm:text-lg text-sky-100/75 max-w-xl leading-relaxed"
         >
           Full-Stack Web Developer
@@ -83,7 +93,8 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
+          transition={enter(0.45)}
+          style={{ willChange: "transform, opacity" }}
           className="flex flex-col sm:flex-row items-center gap-4 mt-1"
         >
           <button
@@ -105,7 +116,8 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={enter(0.6)}
+          style={{ willChange: "opacity" }}
           className="flex items-center gap-5 mt-4"
         >
           {SOCIALS.map(({ icon: Icon, href, label }) => (

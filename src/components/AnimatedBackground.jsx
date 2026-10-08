@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/usePerfMode.js";
 
 export default function AnimatedBackground() {
   const reduceMotion = useReducedMotion();
-  const isMobile =
-    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+  const isMobile = useIsMobile();
   const paused = reduceMotion || isMobile;
 
   return (

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/usePerfMode.js";
 
 /*
  * HeroNotebook.jsx — Notebook melayang di hero section.
@@ -19,8 +20,7 @@ export default function HeroNotebook() {
   // Hormati prefers-reduced-motion: animasi otomatis dimatikan.
   const reduce = useReducedMotion();
   // Layar kecil (HP): matikan animasi melayang/orbit agar tidak nge-frame.
-  const isMobile =
-    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
+  const isMobile = useIsMobile();
   const paused = reduce || isMobile;
 
   return (
@@ -39,7 +39,11 @@ export default function HeroNotebook() {
           <img
             src="/images/notebook-base-removebg.png"
             alt=""
+            width={1024}
+            height={1024}
             draggable="false"
+            loading="lazy"
+            decoding="async"
             className="pointer-events-none absolute inset-0 z-0 h-full w-full object-contain drop-shadow-[0_28px_34px_rgba(4,8,18,0.55)]"
           />
 
@@ -68,7 +72,11 @@ export default function HeroNotebook() {
             <img
               src="/images/profile.jpg"
               alt=""
+              width={400}
+              height={400}
               draggable="false"
+              loading="lazy"
+              decoding="async"
               className="h-10 w-10 rounded-sm border border-amber-900/30 object-cover shadow-md sm:h-14 sm:w-14 md:h-20 md:w-20"
             />
             <p
@@ -86,7 +94,11 @@ export default function HeroNotebook() {
         <motion.img
           src="/images/pen.png"
           alt=""
+          width={256}
+          height={256}
           draggable="false"
+          loading="lazy"
+          decoding="async"
           animate={
             paused
               ? undefined

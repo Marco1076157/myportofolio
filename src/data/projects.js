@@ -63,6 +63,39 @@ const projects = [
   github: "https://github.com/Marco1076157/qr-order-app",
   demo: "https://restoqr.page.gd",
   },
+  {
+  id: 2,
+  title: "Web Managament Gudang",
+  shortDesc:
+    "Aplikasi Warehouse Management System (WMS) berbasis web untuk pengelolaan stok multi-gudang, pelacakan transaksi barang, serta kontrol hak akses pengguna secara real-time.",
+  fullDesc:
+    "Web Management Gudang (WMS) adalah sistem pengelolaan inventaris terintegrasi yang dirancang untuk mengoptimalkan operasional pergudangan secara efisien. Aplikasi ini memungkinkan Admin dan Manager untuk mengelola data master produk, kategori, serta lokasi gudang dan merchant secara terpusat. Dilengkapi dengan fitur pemantauan arus barang (transaksi masuk dan keluar), manajemen stok real-time, serta dashboard analitik visual untuk melihat ringkasan aktivitas pergudangan. Akses sistem dilindungi oleh otentikasi berbasis peran (Role-Based Access Control) yang membedakan hak akses pengguna secara aman.",
+  thumbnail: "/images/project3-0.png",
+  screenshots: [
+    "/images/project3-0.png",
+    "/images/project3-1.png",
+    "/images/project3-2.png",
+    "/images/project3-3.png",
+    "/images/project3-4.png",
+    "/images/project3-5.png",
+    "/images/project3-6.png",
+  ],
+  tech: [
+    "Laravel",
+    "React",
+    "Tailwind CSS",
+    "MySQL",
+  ],
+  features: [
+    "Dashboard Analytics: Ringkasan total stok, statistik barang masuk/keluar, serta aktivitas gudang secara visual",
+    "Master Data Management: CRUD Produk, Kategori, Lokasi Gudang, dan Merchant lengkap dengan upload foto",
+    "Transaction Tracking: Pencatatan arus transaksi barang masuk & keluar terintegrasi dengan filter & pencarian",
+    "User & Role Management: Pengelolaan akun staf, penetapan hak akses bertingkat (Admin, Manager, Staff), & profil user",
+    "Keamanan & Auth: Validasi Token/Middleware, Sanitasi Input, serta Sanitasi Upload File",
+  ],
+  github: "https://github.com/Marco1076157/Web-Managament-Gudang",
+  demo: "https://managament-gudang.vercel.app/",
+  },
 ];
 
 export default projects;

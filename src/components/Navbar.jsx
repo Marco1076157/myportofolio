@@ -38,9 +38,19 @@ export default function Navbar() {
   }, []);
 
   // Ubah background navbar saat halaman di-scroll
+  // (rAF + passive listener agar tidak memblokir main thread tiap frame scroll)
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -53,7 +63,9 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        scrolled ? "bg-[#102a43]/75 backdrop-blur-md border-b border-amber-200/20" : "bg-transparent"
+        scrolled
+          ? "bg-[#102a43]/75 backdrop-blur-[3px] md:backdrop-blur-md border-b border-amber-200/20"
+          : "bg-transparent"
       }`}
     >
       <nav className="flex items-center justify-between px-6 sm:px-10 lg:px-24 py-4">
@@ -103,10 +115,11 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.ul
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            style={{ willChange: "transform, opacity" }}
             className="md:hidden overflow-hidden glass mx-4 rounded-2xl mb-4"
           >
             {NAV_LINKS.map((link) => (

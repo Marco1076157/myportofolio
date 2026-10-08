@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { FaHandshake, FaArrowRight } from "react-icons/fa";
+import { usePerfMode } from "../hooks/usePerfMode.js";
 
 export default function CVSection() {
+  const perf = usePerfMode();
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -11,11 +14,22 @@ export default function CVSection() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: perf.duration(0.5) }}
+        style={{ willChange: "transform, opacity" }}
         className="max-w-4xl mx-auto glass rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden"
       >
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-200/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-sky-200/10 rounded-full blur-3xl" />
+        {/* Dekorasi glow: blur dikurangi di mobile agar tidak membebani GPU */}
+        <div
+          className={`absolute -top-10 -right-10 w-40 h-40 bg-amber-200/10 rounded-full ${
+            perf.isMobile ? "blur-xl" : "blur-3xl"
+          }`}
+        />
+        <div
+          className={`absolute -bottom-10 -left-10 w-40 h-40 bg-sky-200/10 rounded-full ${
+            perf.isMobile ? "blur-xl" : "blur-3xl"
+          }`}
+        />
 
         <div className="relative">
           <FaHandshake className="text-5xl gradient-text mx-auto mb-5" />

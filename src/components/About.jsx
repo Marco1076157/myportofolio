@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { MOBILE_QUERY, useMediaQuery } from "../hooks/usePerfMode.js";
 
 const INFO = [
   { label: "Nama", value: "Bonivasius Marco Tri Admaja" },
@@ -8,6 +9,8 @@ const INFO = [
 ];
 
 export default function About() {
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+
   return (
     <section id="about" className="section-padding">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -15,15 +18,24 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
+          style={{ willChange: "transform, opacity" }}
           className="relative"
         >
-          <div className="absolute -inset-2 rounded-3xl bg-brand-gradient opacity-20 blur-2xl" />
+          {/* Glow statis: blur dikurangi di mobile karena blur radius besar membebani GPU */}
+          <div
+            className={`absolute -inset-2 rounded-3xl bg-brand-gradient opacity-20 ${
+              isMobile ? "blur-md" : "blur-2xl"
+            }`}
+          />
           <img
             src="/images/about.jpeg"
             alt="Tentang saya"
+            width={800}
+            height={1000}
             loading="lazy"
+            decoding="async"
             className="relative w-full rounded-3xl border border-white/10 object-cover aspect-[4/5]"
           />
         </motion.div>
@@ -32,8 +44,9 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
+          style={{ willChange: "transform, opacity" }}
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">
             Tentang <span className="gradient-text">Saya</span>

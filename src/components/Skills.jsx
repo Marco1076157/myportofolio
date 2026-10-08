@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import skillsData from "../data/skills.js";
+import { usePerfMode } from "../hooks/usePerfMode.js";
 
 function SkillCard({ skill }) {
   const Icon = skill.icon;
+  const perf = usePerfMode();
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
+      whileHover={perf.tiltEnabled ? { scale: 1.05 } : undefined}
       className="glass rounded-2xl p-5 flex flex-col items-center gap-3 transition-shadow duration-200 hover:shadow-lg hover:shadow-sky-950/25"
     >
       <Icon className="text-4xl text-blue-400" />
@@ -21,7 +23,8 @@ export default function Skills() {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
           className="text-3xl sm:text-4xl font-bold mb-12 text-center"
         >
           Keahlian & <span className="gradient-text">Stack</span>

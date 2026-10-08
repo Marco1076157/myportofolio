@@ -46,6 +46,18 @@ h4 {
   box-shadow: 0 18px 55px rgba(4, 19, 33, 0.22), inset 0 1px 0 rgba(255, 244, 200, 0.16);
 }
 
+/* Mobile: backdrop-filter & box-shadow tebal adalah penyebab utama lag GPU.
+   Blur radius dan shadow dikurangi, warna latar sedikit diperkuat agar
+   tampilan glass tetap terjaga tanpa biaya kompositing sebesar desktop. */
+@media (max-width: 767px) {
+  .glass {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background: linear-gradient(135deg, rgba(8, 30, 52, 0.86), rgba(30, 66, 91, 0.5));
+    box-shadow: 0 10px 26px rgba(4, 19, 33, 0.18), inset 0 1px 0 rgba(255, 244, 200, 0.14);
+  }
+}
+
 .section-padding {
   @apply px-6 sm:px-10 lg:px-24 py-28;
 }

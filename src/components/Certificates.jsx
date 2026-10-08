@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import certificatesData from "../data/certificates.js";
+import { usePerfMode } from "../hooks/usePerfMode.js";
 
 export default function Certificates() {
   const [selected, setSelected] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
+  const perf = usePerfMode();
 
   const images = selected?.images || [];
   const hasMultiple = images.length > 1;
@@ -28,7 +30,7 @@ export default function Certificates() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "auto";
     };
-  });
+  }, [selected, activeImage]);
 
   const openCert = (cert) => {
     setActiveImage(0);
@@ -41,7 +43,8 @@ export default function Certificates() {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
           className="text-3xl sm:text-4xl font-bold mb-12 text-center"
         >
           Sertifikat & <span className="gradient-text">Pencapaian</span>
@@ -54,8 +57,8 @@ export default function Certificates() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              whileHover={{ scale: 1.03 }}
+              transition={{ duration: perf.duration(0.4), delay: perf.stagger(index, 0.08) }}
+              whileHover={perf.tiltEnabled ? { scale: 1.03 } : undefined}
               onClick={() => openCert(cert)}
               className="text-left w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] rounded-2xl glass overflow-hidden hover:shadow-lg hover:shadow-sky-950/30 transition-shadow duration-300"
             >
@@ -63,7 +66,10 @@ export default function Certificates() {
                 <img
                   src={cert.images[0]}
                   alt={cert.title}
+                  width={900}
+                  height={1200}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 {cert.images.length > 1 && (
@@ -91,7 +97,7 @@ export default function Certificates() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
-            className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[100] bg-black/70 md:backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -113,6 +119,10 @@ export default function Certificates() {
                 <img
                   src={images[activeImage]}
                   alt={`${selected.title} ${activeImage + 1}`}
+                  width={1600}
+                  height={1131}
+                  loading="lazy"
+                  decoding="async"
                   className="max-w-full max-h-[66vh] object-contain rounded-lg"
                 />
 

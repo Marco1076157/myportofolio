@@ -68,7 +68,8 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">
             Hubungi <span className="gradient-text">Saya</span>
@@ -132,7 +133,8 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
           className="flex flex-col justify-center gap-6"
         >
           <div className="glass rounded-2xl p-5 flex items-center gap-4">
