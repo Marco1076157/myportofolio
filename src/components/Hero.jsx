@@ -104,7 +104,7 @@ export default function Hero() {
             Lihat Portofolio
           </button>
           <a
-            href="/cv.pdf"
+            href="/Cv Aco.pdf"
             download
             className="px-6 py-3 rounded-2xl glass text-amber-50 font-semibold hover:bg-white/10 transition-colors duration-200"
           >
