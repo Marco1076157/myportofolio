@@ -13,8 +13,15 @@ const certificates = [
     id: 2,
     title: "Web Junior Programmer",
     issuer: "PPKPI",
-    year: "2023",
+    year: "2026",
     images: ["/images/cert2.jpeg", "/images/cert2-1.jpeg"],
+  },
+  {
+    id: 3,
+    title: "Junior Web Developer",
+    issuer: "BNSP",
+    year: "2026",
+    images: ["/images/cert3.jpeg", "/images/cert3-1.jpeg"],
   },
 ];
 
